@@ -17,7 +17,7 @@ rules.push({
     use: ExtractTextPlugin.extract({
         fallback: 'style-loader',
         publicPath: './',
-        use: ['css-loader','sass-loader']
+        use: ['css-loader', 'sass-loader']
     })
 });
 

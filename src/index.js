@@ -5,6 +5,12 @@ import img2 from './img/plus.png';
 import img3 from './img/search.png';
 import img4 from './img/white.png';
 
+import VkOpen from './js/vk';
+import './js/dnd';
+
+// VkOpen();
+// console.log(friendslist);
+
 
 
 

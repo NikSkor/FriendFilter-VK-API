@@ -160,6 +160,7 @@ h1,h2,h3,h4,h5,h6 {
     align-items: center;
     height: 60px;
     justify-content: flex-start;
+    // draggable: true;
     &:hover {
         background-color: $light;
     } 
@@ -168,8 +169,12 @@ h1,h2,h3,h4,h5,h6 {
     width: 45px;
     height: 45px;
     border-radius: 50%;
-    background: url("../img/sab.jpg") center no-repeat;
+    // background: url("../img/sab.jpg") center no-repeat;
     margin-right: 7px;
+    overflow: hidden;
+}
+.download__avatar {
+    width: 100%;
 }
 .download__del {
     width: 15px;
