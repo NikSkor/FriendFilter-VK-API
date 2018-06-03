@@ -235,10 +235,6 @@ h1,h2,h3,h4,h5,h6 {
     background-color: #c4c4c4;
     }
     
-    // ::-webkit-scrollbar-thumb:hover{
-    // background-color:#c4c4c4;
-    // }
-    
     ::-webkit-resizer{
     background-image: url('');
     background-repeat: no-repeat;
@@ -248,4 +244,7 @@ h1,h2,h3,h4,h5,h6 {
     
     ::-webkit-scrollbar{
     width: 4px;
+    }
+    .hide {
+        display: none;
     }

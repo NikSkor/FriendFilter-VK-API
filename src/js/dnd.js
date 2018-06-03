@@ -70,9 +70,16 @@ export function moveElem() {
                     e.preventDefault();
 
                     if (currentDrag.source !== zone) {
-                        zone.prepend(currentDrag.node);
-                        currentDrag.node.lastElementChild.classList.toggle('download__del_plus');
-                        currentDrag.node.lastElementChild.classList.toggle('download__del_close');
+                        if (e.target.classList.contains('download__item')) {
+                            zone.insertBefore(currentDrag.node, e.target.nextElementSibling);
+                            currentDrag.node.lastElementChild.classList.toggle('download__del_plus');
+                            currentDrag.node.lastElementChild.classList.toggle('download__del_close');
+                        } else {
+                            zone.prepend(currentDrag.node);
+                            currentDrag.node.lastElementChild.classList.toggle('download__del_plus');
+                            currentDrag.node.lastElementChild.classList.toggle('download__del_close');
+                        }
+                        
                     }
                     currentDrag = null;
                 }
