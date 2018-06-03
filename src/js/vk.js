@@ -1,6 +1,6 @@
 // import { render } from './createList';
 import render from '../index/downloadlist.hbs';
-import moving from '../js/dnd';
+import { moveElem } from '../js/dnd';
 
 VK.init({
     apiId: 6497541
@@ -59,7 +59,7 @@ auth()
         
         container.innerHTML = render({ friendslist });
 
-        moving();
+        moveElem();
 
 
     })

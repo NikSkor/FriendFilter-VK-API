@@ -1,58 +1,82 @@
-import render2 from '../index/addlist.hbs';
-const source = document.querySelector('.download__list');
-const target = document.querySelector('.result__list');
-// let counter = 0;
+export function moveElem() {
+    // let buttons = document.querySelectorAll('.download__del');
+    let target = document.querySelector('.result__list');
+    let source = document.querySelector('.download__list');
 
-makeDnD([source, target]);
-
-document.addEventListener('click', e => {
-    if (e.target.classList.contains('.download__del')) {
-        const newItem = createItem();
-        const parent = e.target.parentNode;
-
-        parent.insertBefore(newItem, parent.lastElementChild)
+    function moveNode(node, elem) {
+        if (node.parentNode === source) {
+            target.prepend(node);
+        } else if (node.parentNode === target) {
+            source.prepend(node);
+        }
+        elem.classList.toggle('download__del_plus');
+        elem.classList.toggle('download__del_close');
     }
-});
+    // for (let i = 0, button; button = buttons[i]; i++) {
+    //     button.addEventListener('click', (e) => {
+    //         let elem = e.target;
+    //         let block = elem.parentNode;
 
-function createItem() {
-    // const newDiv = document.createElement('div');
+    //         moveNode(block, elem);
+    //     });
+    // }
+    source.addEventListener('click', (e)=>{
+        let elem = e.target;
+        let block = elem.parentNode;
 
-    // // newDiv.textContent = counter++;
-    // newDiv.classList.add('item');
-    // newDiv.draggable = true;
-
-    // return newDiv;
-    let container = document.querySelector('.result__list');
-        
-    container.innerHTML = render2({ friendslist });
-}
-
-function makeDnD(zones) {
-    let currentDrag;
-
-    zones.forEach(zone => {
-        zone.addEventListener('dragstart', (e) => {
-            currentDrag = { source: zone, node: e.target };
-        });
-
-        zone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-        });
-
-        zone.addEventListener('drop', (e) => {
-            if (currentDrag) {
-                e.preventDefault();
-
-                if (currentDrag.source !== zone) {
-                    if (e.target.classList.contains('item')) {
-                        zone.insertBefore(currentDrag.node, e.target.nextElementSibling);
-                    } else {
-                        zone.insertBefore(currentDrag.node, zone.lastElementChild);
-                    }
-                }
-
-                currentDrag = null;
-            }
-        });
+        if (elem.classList.contains('download__del')) {
+            moveNode(block, elem);
+        }
     })
+    target.addEventListener('click', (e)=>{
+        let elem = e.target;
+        let block = elem.parentNode;
+
+        if (elem.classList.contains('download__del')) {
+            moveNode(block, elem);
+        }
+    })
+
+    makeDnD([source, target]);
+
+    function makeDnD(zones) {
+        let currentDrag;
+
+        zones.forEach(zone => {
+            for (const item of zone.children) {
+                item.draggable = true;
+                item.children.draggable = false;
+            }
+            zone.addEventListener('dragstart', (e) => {
+                let elem;
+
+                if (e.target.classList.contains('download__item')) {
+                    elem = e.target;
+                }
+                if (e.target.parentNode.parentNode.classList.contains('download__item')) {
+                    elem = e.target.parentNode.parentNode;
+                } 
+                currentDrag = { source: zone, node: elem };
+                console.log(currentDrag);
+
+            });
+
+            zone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+            });
+
+            zone.addEventListener('drop', (e) => {
+                if (currentDrag) {
+                    e.preventDefault();
+
+                    if (currentDrag.source !== zone) {
+                        zone.prepend(currentDrag.node);
+                        currentDrag.node.lastElementChild.classList.toggle('download__del_plus');
+                        currentDrag.node.lastElementChild.classList.toggle('download__del_close');
+                    }
+                    currentDrag = null;
+                }
+            });
+        })
+    }
 }
