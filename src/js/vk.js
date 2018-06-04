@@ -1,9 +1,3 @@
-// import { render } from './createList';
-// import render from '../index/downloadlist.hbs';
-// import { moveElem } from '../js/dnd';
-// import { filter } from '../js/filter';
-
-
 VK.init({
     apiId: 6497541
 });
@@ -33,39 +27,7 @@ function callAPI(method, params) {
         });
     })
 }
-function vision (fg) {
-    console.log(fg);
-}
-// let friendslist=[];
-// export {
-//     auth, callAPI
-// };
+
 export {
     auth, callAPI
 }
-// auth()
-//     .then(() => {
-
-//         return callAPI('friends.get', { fields: 'photo_100' });
-//     })
-//     .then(friends => {
-//         let friendslist=[];
-
-//         friendslist=friends.items;
-        
-//         // vision(friendslist);
-//         // let container = document.querySelector('.download__list');
-
-//         // render(friends);
-//         // container.innerHTML = ({ friendslist });
-//         // let mas = friends;
-
-//         let container = document.querySelector('.download__list');
-        
-//         container.innerHTML = render({ friendslist });
-//         filter();
-//         moveElem();
-
-
-//     })
-
