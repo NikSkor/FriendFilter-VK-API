@@ -17,7 +17,7 @@ rules.push({
     use: ExtractTextPlugin.extract({
         fallback: 'style-loader',
         publicPath: './',
-        use: ['css-loader','sass-loader']
+        use: ['css-loader', 'sass-loader']
     })
 });
 
@@ -35,13 +35,13 @@ module.exports = {
     devtool: 'source-map',
     module: { rules },
     plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-            sourceMap: true,
-            compress: {
-                drop_debugger: false,
-                warnings: false
-            }
-        }),
+        // new webpack.optimize.UglifyJsPlugin({
+        //     sourceMap: true,
+        //     compress: {
+        //         drop_debugger: false,
+        //         warnings: false
+        //     }
+        // }),
         new ExtractTextPlugin('styles.css'),
         new HtmlPlugin({
             title: 'Friend Filter',
