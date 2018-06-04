@@ -12,6 +12,7 @@ export function storage() {
 
             elem.first_name = item.children[1].textContent;
             elem.photo_100 = item.children[0].firstElementChild.getAttribute('src');
+            elem.id = item.children[3].textContent;
 
             friendsList.push(elem);
         }
@@ -19,9 +20,7 @@ export function storage() {
         return friendsList;
     }
 
-    save.addEventListener('click', ()=> {
-        // storage.dataLeft=JSON.stringify ('');
-        // storage.dataRight=JSON.stringify ('');        
+    save.addEventListener('click', ()=> {     
         let leftFriendList = leftList.querySelectorAll('.download__item');
         let rightFriendList = rightList.querySelectorAll('.download__item')  
         

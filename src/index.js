@@ -10,58 +10,64 @@ import { moveElem } from './js/dnd';
 import { filter } from './js/filter';
 import { storage } from './js/storage';
 
-// localStorage.clear();
-storage();
-console.log(localStorage);
-let friendslistLeft=[];
-let friendslistRight=[];
-let container = document.querySelector('.download__list');
-let rightList = document.querySelector('.result__list');
+auth()
+    .then(() => {
 
-if (localStorage.dataLeft && localStorage.dataRight) {
-    // console.log(localStorage.dataLeft);
-    friendslistLeft=JSON.parse(localStorage.dataLeft);
-    friendslistRight=JSON.parse(localStorage.dataRight);
-    let friendslist = friendslistLeft.item;
-    let friendsRight = friendslistRight.item;
+        return callAPI('friends.get', { order: 'name', fields: ' photo_100' });
+    })
+    .then(friends => {
 
-    // if (friendslist !== undefined || friendsRight !== undefined) {
-    container.innerHTML = render({ friendslist });
-    rightList.innerHTML = renderRight({ friendsRight });
-    filter();
-    moveElem();
+        let container = document.querySelector('.download__list');
+        let friendslistLeft=[];
+        let friendslistRight=[];
+        let rightList = document.querySelector('.result__list');
+        let friendslistOn;
+        let updateListLeft=[];
+        
+        friendslistOn = friends.items;
+        // console.log(friendslistOn);
 
-} else {
-    auth()
-        .then(() => {
-
-            return callAPI('friends.get', { order: 'name', fields: ' photo_100' });
-        })
-        .then(friends => {
-
-            let friendslist=[];
-            // let friendsLeft=[];
-            // let friendsRight=[];
-
-            friendslist=friends.items;
-            console.log(friendslist);
-            let container = document.querySelector('.download__list');
-
+        if (localStorage.dataLeft || localStorage.dataRight) {
+            // console.log(localStorage.dataLeft);
+            friendslistLeft=JSON.parse(localStorage.dataLeft);
+            friendslistRight=JSON.parse(localStorage.dataRight);
+            let friendslist = friendslistLeft.item;
+            let friendsRight = friendslistRight.item;
+            
             // console.log(friendslist);
-            
-            // if (localStorage.dataLeft) {
-            //     friendslist=JSON.parse(localStorage.dataLeft)
-            // }
 
-            container.innerHTML = render({ friendslist });
+            let updateListLeft=[];
+            let updateListRight=[];
+        
+            for (let i=0; i<friendslist.length; i++) {
+                for (let j=0; j < friendslistOn.length; j++) {
+                    if (friendslist[i].id == friendslistOn[j].id) {
+                        updateListLeft.push(friendslistOn[j]);
+
+                    }
+                    
+                }
+            }
+            for (let i=0; i<friendsRight.length; i++) {
+                for (let j=0; j < friendslistOn.length; j++) {
+                    if (friendsRight[i].id == friendslistOn[j].id) {
+                        updateListRight.push(friendslistOn[j]);
+                    }
+                }
+            }
             
+            container.innerHTML = render({ updateListLeft });
+            rightList.innerHTML = renderRight({ updateListRight });
             filter();
             moveElem();
             storage();
-            console.log(localStorage);
-            // friendslist = storage();
-            // container.innerHTML = render({ friendslist });
-            
-        })
-}
-// } 
+        } else {
+            updateListLeft = friendslistOn;
+            container.innerHTML = render({ updateListLeft });
+            filter();
+            moveElem();
+            storage();
+        }
+        // console.log(localStorage);
+        // localStorage.clear();
+    })

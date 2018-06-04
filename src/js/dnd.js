@@ -2,7 +2,6 @@ export function moveElem() {
     // let buttons = document.querySelectorAll('.download__del');
     let target = document.querySelector('.result__list');
     let source = document.querySelector('.download__list');
-    // let img = document.querySelector('.download__avatar');
 
     function moveNode(node, elem) {
         if (node.parentNode === source) {
@@ -46,7 +45,6 @@ export function moveElem() {
         zones.forEach(zone => {
             for (const item of zone.children) {
                 item.draggable = true;
-                // item.firstChild.children.draggable = false;
             }
             zone.addEventListener('dragstart', (e) => {
                 let elem;
