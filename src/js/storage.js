@@ -3,6 +3,8 @@ export function storage() {
     let storage = localStorage;
     let rightList = document.querySelector('.result__list');
     let leftList = document.querySelector('.download__list');
+    let alertBlock = document.querySelector('.content__alert');
+    let alertButton = document.querySelector('.alert__button');
 
     function saveList(list) {
         let friendsList = [];
@@ -30,6 +32,12 @@ export function storage() {
         storage.dataRight=JSON.stringify ({
             item: saveList(rightFriendList)
         });
+        alertBlock.classList.remove('content__alert_hide');
+        alertButton.addEventListener('click', ()=> {
+            alertBlock.classList.add('content__alert_hide');
+        })
+
+        // alert('Списки друзей сохранены!');
     })
 
 }

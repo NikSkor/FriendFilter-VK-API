@@ -5,15 +5,16 @@ import img3 from './img/white.png';
 
 import { auth, callAPI } from './js/vk';
 import render from './index/downloadlist.hbs';
-import renderRight from './index//addlist.hbs';
 import { moveElem } from './js/dnd';
 import { filter } from './js/filter';
 import { storage } from './js/storage';
+let rightFriends = document.querySelector('.result__list');
+let leftFriends = document.querySelector('.download__list');
 
 auth()
     .then(() => {
 
-        return callAPI('friends.get', { order: 'name', fields: ' photo_100' });
+        return callAPI('friends.get', { fields: ' photo_100' });
     })
     .then(friends => {
 
@@ -22,7 +23,6 @@ auth()
         let friendslistRight=[];
         let rightList = document.querySelector('.result__list');
         let friendslistOn;
-        let updateListLeft=[];
         
         friendslistOn = friends.items;
         // console.log(friendslistOn);
@@ -55,15 +55,40 @@ auth()
                     }
                 }
             }
+            if (updateListLeft) {
+                let updateList = updateListLeft;
+
+                container.innerHTML = render({ updateList });
+            }
+            if (updateListRight) {
+                let updateList = updateListRight;
+
+                rightList.innerHTML = render({ updateList });
+
+            }
+            let elemsRight = rightFriends.querySelectorAll('.download__del');
+            let elemsLeft = leftFriends.querySelectorAll('.download__del');
             
-            container.innerHTML = render({ updateListLeft });
-            rightList.innerHTML = renderRight({ updateListRight });
+            for (let elem of elemsLeft) {
+                elem.classList.add('download__del_plus');
+            }
+            for (let elem of elemsRight) {
+                elem.classList.add('download__del_close');
+            }
+
             filter();
             moveElem();
             storage();
         } else {
-            updateListLeft = friendslistOn;
-            container.innerHTML = render({ updateListLeft });
+            let updateList = friendslistOn;
+
+            container.innerHTML = render({ updateList });
+
+            let elemsLeft = leftFriends.querySelectorAll('.download__del');
+
+            for (let elem of elemsLeft) {
+                elem.classList.add('download__del_plus');
+            }
             filter();
             moveElem();
             storage();

@@ -71,12 +71,12 @@ export function moveElem() {
                     if (currentDrag.source !== zone) {
                         if (e.target.classList.contains('download__item')) {
                             zone.insertBefore(currentDrag.node, e.target.nextElementSibling);
-                            currentDrag.node.lastElementChild.classList.toggle('download__del_plus');
-                            currentDrag.node.lastElementChild.classList.toggle('download__del_close');
+                            currentDrag.node.children[2].classList.toggle('download__del_plus');
+                            currentDrag.node.children[2].classList.toggle('download__del_close');
                         } else {
                             zone.prepend(currentDrag.node);
-                            currentDrag.node.lastElementChild.classList.toggle('download__del_plus');
-                            currentDrag.node.lastElementChild.classList.toggle('download__del_close');
+                            currentDrag.node.children[2].classList.toggle('download__del_plus');
+                            currentDrag.node.children[2].classList.toggle('download__del_close');
                         }
                         
                     }
